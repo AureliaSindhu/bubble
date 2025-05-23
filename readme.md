@@ -1,32 +1,35 @@
-# CIS-11 Project: Bubble Sort in Assembly
+# Bubble Sort in Assembly (LC-3)
 
-## To Do:
+A program that implements bubble sort algorithm in LC-3 assembly language. The program takes 8 numbers as input and sorts them in ascending order.
 
-### Program:
+## Usage
 
-Create an LC-3 program that implements Bubble Sort for the following values:
+1. Load the program into the LC-3 simulator
+2. Enter 8 numbers when prompted (numbers must be between -32768 and 32767)
+3. The program will display the sorted numbers in ascending order
+4. The original array will be preserved in memory starting at x3100
 
-Input: User input 8 numbers, ranging from 0 – 100.
-Output: Display sorted values in ascending order in console.
+## Features
 
-The program must fulfill the following criteria:
+- Implements classic bubble sort algorithm in LC-3 assembly
+- Handles both positive and negative 16-bit integers
+- Memory efficient implementation
+- Input validation included
+- Clear output formatting
 
-1. Contain appropriate addresses: origination, fill, array, input and output. (20 points)
-2. Display sorted values in console. (20 points)
-3. Use appropriate labels and comments. (20 points)
-4. Contain appropriate instructions for arithmetic, data movement and conditional operations. (40 points)
-5. Comprise of 2 or more subroutines and implement subroutine calls. (20 points)
-6. Use branching for control: conditional and iterative. (30 points)
-7. Manage overflow and storage allocation. (20 points)
-8. Manage stack: include PUSH-POP operation on stack. (20 points)
-9. Include save-restore operations. (30 points)
-10. Include pointer (20 points)
-11. Implement ASCII conversion operations (30 points)
-12. Use appropriate system call directives. (10 point)
-13. Testing (20 points): Test the program using the below values (green).
+## Documentation
+- [Step1 To Do]()
+<!-- - [Project Requirements](docs/requirements.md)
+- [Implementation Details](docs/implementation.md)
+- [Test Cases](docs/testing.md) -->
 
-### Manifactured by CSS
+## Example
 
-- Brittany C.
+- **Input**: 64 34 25 12 22 11 90 -5
+- **Output**: -5 11 12 22 25 34 64 90
+
+## Manufactured by CSS
+
 - Aurelia S.
-- Aurelisa S.
+- Aurelisa S. 
+- Brittany C.
