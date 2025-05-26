@@ -19,7 +19,9 @@ A program that implements bubble sort algorithm in LC-3 assembly language. The p
 
 ## Documentation
 - [Steps](docs/todo.md)
-- [Part 1 Project Planning](docs/)
+- [Part 1 Project Planning](docs/part1.pdf)
+
+
 <!-- - [Project Requirements](docs/requirements.md)
 - [Implementation Details](docs/implementation.md)
 - [Test Cases](docs/testing.md) -->
