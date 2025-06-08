@@ -18,8 +18,8 @@ A program that implements bubble sort algorithm in LC-3 assembly language. The p
 - Clear output formatting
 
 ## Documentation
-- [Steps](docs/todo.md)
-- [Part 1 Project Planning](docs/part1.pdf)
+- [Task Delegation](docs/todo.md)
+- [Documentation](docs/part1.pdf)
 
 
 <!-- - [Project Requirements](docs/requirements.md)
