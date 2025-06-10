@@ -11,13 +11,13 @@ HALT
 
 
 DISPLAY_SORTED
-	LEA R0, SORTED    ; Load "Sorted Array: " string
-	PUTS              ; Display SORTED string
+	LEA R0, PROMPT_SORTED    ; Load "Sorted Array: " string
+	PUTS              ; Display string
 	RET
 
 
 
-SORTED 		.STRINGZ "Sorted Array: "
+PROMPT_SORTED 		.STRINGZ "Sorted Array: "
 
 .END
 
