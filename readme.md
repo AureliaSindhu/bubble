@@ -28,50 +28,39 @@ A program that implements the bubble sort algorithm in LC-3 assembly language to
 
 ## Installation & Setup
 
-### macOS
+### MacOs
+If you are using macOS or Chromebook, use one of the following online simulators:  
 
-1. **Install Homebrew** (if you don’t have it already):  
-   ```bash
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   ```
-2. **Install Java** (required by many LC-3 simulators):  
-   ```bash
-   brew install java
-   ```
-3. **Download and install LC3Edit & LC3 Simulator**:  
-   - **LC3Edit** (assembler & editor):  
-     ```bash
-     brew install --cask lc3edit
-     ```
-   - **LC3 Simulator** (e.g. PennSim or xspim for LC-3):  
-     ```bash
-     brew install --cask pennsim
-     ```
-4. **Verify installation**:  
-   ```bash
-   lc3edit --version
-   pennsim --help
-   ```
-5. **Copy the project files** (your `.asm` and `.obj` files) into a working folder of your choice.
+- [LC-3 Web (W. Chargin)](https://wchargin.com/lc3web/)  
+- [U of Manitoba LC-3 Simulator](https://lc3.cs.umanitoba.ca/)  
+- [LC-3 Tutor](http://lc3tutor.org/)
+
+**Steps:**  
+1. In a text editor (e.g., TextEdit, TextMate, Sublime Text, Vim, Atom, VS Code), create your `.asm` file (e.g., `lab2ex1.asm`).  
+2. Open your browser and visit one of the simulators above.  
+3. Click **Assemble**, then paste your assembly code into the provided window.  
+4. Click **Assemble** again, then click **Load Into Simulator**.  
+5. (Optional) Download the assembled files if you need the `.obj` file.  
+6. To enter input values directly into memory, click the second column at the desired address and edit the value in hexadecimal.  
+7. Click **Run**. Any program output will appear in the console area.
 
 ### Windows
 
-1. **Install Java** (if not already installed):  
-   - Download from https://www.java.com/en/download/  
-   - Follow the installer prompts.
-2. **Download LC3Tools** (includes LC3Edit and Simulator):  
+1. **Install Java** (if needed):  
+   - Download from https://www.java.com/en/download/ and follow the installer.  
+2. **Download LC3Tools** (includes LC3Edit and simulator):  
    - Go to https://www.purplemath.com/modules/LC3Tools.zip  
-   - Extract the ZIP to `C:\LC3Tools`.
-3. **Add to PATH** (optional, for convenience):  
+   - Extract the ZIP to `C:\LC3Tools`.  
+3. **(Optional) Add to PATH** for ease of use:  
    - Open **Control Panel › System and Security › System › Advanced system settings**  
    - Click **Environment Variables**  
-   - Under **User variables**, edit `Path` and add `C:\LC3Tools`.
-4. **Verify installation**:  
+   - Under **User variables**, edit `Path` and add `C:\LC3Tools`.  
+4. **Verify** by running in PowerShell or CMD:  
    ```powershell
-   lc3edit.exe --version
-   simulator.exe --help
+   C:\LC3Tools\lc3edit.exe --version
+   C:\LC3Tools\simulator.exe --help
    ```
-5. **Copy the project files** (`.asm` and `.obj`) into `C:\LC3Tools\Projects\BubbleSort` or a folder of your choice.
+5. **Copy** your `.asm` and `.obj` files into your project folder (e.g., `C:\LC3Tools\Projects\BubbleSort`).
 
 ## Usage
 
