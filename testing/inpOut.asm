@@ -3,7 +3,7 @@
 ;------------------------------------------------------------------
 
         .ORIG   x3000
-        LEA     R6, STACK_INIT      ; Initialize the stack pointer 
+        LD     R6, STACK_INIT      ; Initialize the stack pointer 
         JSR     READ_NUMBERS
         JSR     DISPLAY_SORTED
         HALT
