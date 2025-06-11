@@ -11,21 +11,21 @@ This project implements the **Bubble Sort algorithm** in **LC-3 assembly languag
 ### Lia – Input & Data Preparation 
 
 #### Tasks
-- [ ] **Initialize Stack Pointer**
+- [X] **Initialize Stack Pointer**
   - Set `R6 ← xFE00` at program start.
-- [ ] **Implement `ReadNumbers` Subroutine**
+- [X] **Implement `ReadNumbers` Subroutine**
   - Prompt the user with `PUTS`.
   - Capture input using `TRAP x23`.
   - Call `ASCIItoInt` to convert input to binary.
   - Validate input is between 0–100.
   - Store input into the `ARRAY` using `STR` with pointer offset.
   - Repeat for 8 inputs.
-- [ ] **Build ASCII to Integer Conversion (`ASCIItoInt`)**
+- [X] **Build ASCII to Integer Conversion (`ASCIItoInt`)**
   - Handle multi-digit inputs (e.g., '17').
   - Subtract ASCII `'0'` to form binary number.
-- [ ] **Create Input Prompt Strings**
+- [X] **Create Input Prompt Strings**
   - Use `.STRINGZ` and `LEA` with `PUTS` for UI.
-- [ ] **Allocate Memory**
+- [X] **Allocate Memory**
   - Define `ARRAY` with `.BLKW 8`.
 
 #### Requirements
