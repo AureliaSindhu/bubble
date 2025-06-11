@@ -2,7 +2,7 @@
 ;  INPUT + OUTPUT 
 ;------------------------------------------------------------------
 
-         ORIG   x3000
+        .ORIG   x3000
         LEA     R6, STACK_INIT      ; Initialize the stack pointer 
         JSR     READ_NUMBERS
         JSR     DISPLAY_SORTED
@@ -285,24 +285,24 @@ PD_EXIT
 ;-------------------------------
 
 ; --- Memory Storage ---
-ARRAY            BLKW   #8 
-BUFFER           BLKW   #5          ; Accommodates up to '100',newline, and null 
-STACK_INIT       FILL   xFE00
+ARRAY            .BLKW   #8 
+BUFFER           .BLKW   #5          ; Accommodates up to '100',newline, and null 
+STACK_INIT       .FILL   xFE00
 
 ; --- Strings ---
-PROMPT_SORTED    STRINGZ "\nSorted Array: "
-PROMPT_STR       STRINGZ "\nEnter a number (0-100): "
-ERROR_STR        STRINGZ "\nInvalid input  Please try again "
-NEWLINE_CHAR     STRINGZ "\n"
+PROMPT_SORTED    .STRINGZ "\nSorted Array: "
+PROMPT_STR       .STRINGZ "\nEnter a number (0-100): "
+ERROR_STR        .STRINGZ "\nInvalid input  Please try again "
+NEWLINE_CHAR     .STRINGZ "\n"
 
 ; --- Constants ---
-NEWLINE_NEG      FILL   #-10
-ASCII_NEG_ZERO   FILL   #-48
-CONST_NEG_101    FILL   #-101       ; For validation check (number > 100)
-CONST_NEG_100    FILL   #-100       
+NEWLINE_NEG      .FILL   #-10
+ASCII_NEG_ZERO   .FILL   #-48
+CONST_NEG_101    .FILL   #-101       ; For validation check (number > 100)
+CONST_NEG_100    .FILL   #-100       
 
-CONV_TO_ASCII    FILL   x30         ; ASCII value for '0'
-ASCII_ONE        FILL   x31         ; ASCII value for '1'
-SPACE            FILL   x20         ; ASCII value for a space character
+CONV_TO_ASCII    .FILL   x30         ; ASCII value for '0'
+ASCII_ONE        .FILL   x31         ; ASCII value for '1'
+SPACE            .FILL   x20         ; ASCII value for a space character
 
  .END
