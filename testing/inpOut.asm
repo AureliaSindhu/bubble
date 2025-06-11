@@ -215,6 +215,8 @@ DISPLAY_DONE
 ;-------------------------------
 
 PRINT_DECIMAL
+        ADD     R6, R6, #-1         ; PUSH R7
+        STR     R7, R6, #0
         ADD     R6, R6, #-1         ; PUSH R5
         STR     R5, R6, #0
         ADD     R6, R6, #-1         ; PUSH R4
