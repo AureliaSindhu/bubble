@@ -1,18 +1,10 @@
-;------------------------------------------------------------------
-;  INPUT + OUTPUT 
-;------------------------------------------------------------------
+.ORIG   x3000
 
-        .ORIG   x3000
-        LD      R6, STACK_INIT      ; Initialize the stack pointer 
-        JSR     READ_NUMBERS
-        JSR     DISPLAY_SORTED
-        HALT
+LD      R6, STACK_INIT      ; Initialize the stack pointer 
+JSR     READ_NUMBERS
+JSR     DISPLAY_SORTED
+HALT
 
-;-------------------------------
-; READ_NUMBERS Subroutine
-; Description: Prompts the user to enter 8 numbers, validates them (0-100),
-;              and stores them in the ARRAY 
-;-------------------------------
 READ_NUMBERS
         ; -- Save Registers using the Stack (PUSH) --
         ADD     R6, R6, #-1         ; Push R7
@@ -41,7 +33,7 @@ RN_LOOP
 RN_GETC_LOOP
         GETC                        ; Read a character into R0 
         OUT                         ; Echo it to the console 
-        LD      R4, NEWLINE_NEG     ; Check if the character is newline (Enter key) 
+        ADD     R4, R0, #-10
         ADD     R4, R0, R4
         BRz     RN_END_GETC         ; If newline, end input reading 
         STR     R0, R3, #0          ; Store character in the buffer 
@@ -62,6 +54,8 @@ RN_END_GETC
         LD      R3, CONST_NEG_101   ; Load -101 into R3 
         ADD     R4, R5, R3          ; R4 = number - 101 
         BRp     RN_INVALID          ; If P is set, number > 100 (invalid) 
+        
+CONST_NEG_101    .FILL   #-101
 
         ; -- Store Valid Number and Continue Loop --
         STR     R5, R2, #0          ; Store the valid number in ARRAY 
@@ -92,11 +86,6 @@ RN_DONE
         ADD     R6, R6, #1
         RET
 
-;-------------------------------
-; ASCII_TO_INT Subroutine
-; Input:  R0 = Pointer to a null-terminated string of digits 
-; Output: R0 = Converted binary integer 
-;-------------------------------
 ASCII_TO_INT
         ; -- Save Registers using the Stack --
         ADD     R6, R6, #-1         ; Push R7
@@ -146,13 +135,72 @@ A2I_DONE
         ADD     R6, R6, #1
         RET
 
+B_OUTER
+        AND     R1, R1, #0    ; SWAPPED = 0
+        LEA     R2, ARRAY     ; R2 → base of ARRAY
+        AND     R3, R3, #0
+        ADD     R3, R3, #7    ; inner count = length-1 (8–1=7)
 
-;-------------------------------
-; DISPLAY_SORTED Subroutine
-; Description: Outputs the array sorted by bubble sort and does
-;              necessary ASCII conversion to ensure values are correctly
-;			   outputted 
-;-------------------------------
+B_INNER
+        LDR     R4, R2, #0    ; x1 = M[R2]
+        LDR     R5, R2, #1    ; x2 = M[R2+1]
+        NOT     R7, R4        ; R7 = –x1
+        ADD     R7, R7, #1
+        ADD     R6, R5, R7    ; R6 = x2 – x1
+        BRn     B_DO_SWAP     ; if x2 < x1, swap
+
+B_SKIP
+        ADD     R2, R2, #1    ; advance pointer
+        ADD     R3, R3, #-1   ; decrement count
+        BRp     B_INNER       ; more comparisons?
+        BRz     B_CHECK_DONE  ; no swaps and done?
+        BR      B_OUTER       ; else, another pass
+
+B_DO_SWAP
+        JSR     SWAP          ; swap M[R2] and M[R2+1]
+        ADD     R1, R1, #1    ; SWAPPED = 1
+        ADD     R2, R2, #1
+        ADD     R3, R3, #-1
+        BRp     B_INNER
+
+B_CHECK_DONE
+        ; -- Restore registers (R1, R2, R3, R4, R5, R7) --
+        LDR     R1, R6, #0    ; Pop R1
+        ADD R6, R6, #1
+        LDR     R2, R6, #0    ; Pop R2
+        ADD R6, R6, #1
+        LDR     R3, R6, #0    ; Pop R3
+        ADD R6, R6, #1
+        LDR     R4, R6, #0    ; Pop R4
+        ADD R6, R6, #1
+        LDR     R5, R6, #0    ; Pop R5
+        ADD R6, R6, #1
+        LDR     R7, R6, #0    ; Pop R7
+        ADD R6, R6, #1
+        RET
+
+SWAP
+        ; -- Save registers (R1, R2, R7) --
+        ADD     R6, R6, #-1   ; push R1
+        STR     R1, R6, #0
+        ADD     R6, R6, #-1   ; push R2
+        STR     R2, R6, #0
+        ADD     R6, R6, #-1   ; push R7
+        STR     R7, R6, #0
+
+        LDR     R1, R2, #0    ; R1 = M[R2]
+        LDR     R3, R2, #1    ; R3 = M[R2+1]
+        STR     R3, R2, #0    ; M[R2]   ← x2
+        STR     R1, R2, #1    ; M[R2+1] ← x1
+
+        ; -- Restore registers (R1, R2, R7) --
+        LDR     R7, R6, #0    
+        ADD R6, R6, #1
+        LDR     R2, R6, #0    
+        ADD R6, R6, #1
+        LDR     R1, R6, #0    
+        ADD R6, R6, #1
+        RET
 
 DISPLAY_SORTED
         ; -- Save Registers using the Stack (PUSH) -- 
@@ -207,12 +255,6 @@ DISPLAY_DONE
         LDR     R7, R6, #0          ; Pop R7
         ADD     R6, R6, #1
         RET
-
-;-------------------------------
-; PRINT_DECIMAL Subroutine
-; Input: R0 = number (0–100)
-; Output: Prints the ASCII representation of the number in R0 to the console 
-;-------------------------------
 
 PRINT_DECIMAL
         ADD     R6, R6, #-1         ; PUSH R7
@@ -284,10 +326,6 @@ PD_EXIT
         ADD     R6, R6, #1
         RET
 
-;-------------------------------
-; Data & Constants
-;-------------------------------
-
 ; --- Memory Storage ---
 ARRAY            .BLKW   #8 
 BUFFER           .BLKW   #5          ; Accommodates up to '100',newline, and null 
@@ -300,13 +338,11 @@ ERROR_STR        .STRINGZ "\nInvalid input  Please try again "
 NEWLINE_CHAR     .STRINGZ "\n"
 
 ; --- Constants ---
-NEWLINE_NEG      .FILL   #-10
-ASCII_NEG_ZERO   .FILL   #-48
-CONST_NEG_101    .FILL   #-101       ; For validation check (number > 100)
+ASCII_NEG_ZERO   .FILL   #-48       
 CONST_NEG_100    .FILL   #-100       
 
 CONV_TO_ASCII    .FILL   x30         ; ASCII value for '0'
 ASCII_ONE        .FILL   x31         ; ASCII value for '1'
 SPACE            .FILL   x20         ; ASCII value for a space character
 
- .END
+.END
