@@ -34,7 +34,6 @@ RN_GETC_LOOP
         GETC                        ; Read a character into R0 
         OUT                         ; Echo it to the console 
         ADD     R4, R0, #-10
-        ADD     R4, R0, R4
         BRz     RN_END_GETC         ; If newline, end input reading 
         STR     R0, R3, #0          ; Store character in the buffer 
         ADD     R3, R3, #1          ; Increment buffer pointer 
@@ -48,7 +47,7 @@ RN_END_GETC
         JSR     ASCII_TO_INT        ; Convert string to integer -> returns in R0 
         ADD     R5, R0, #0          ; Copy result to R5 for validation 
 
-        ADD     R5, R5, #0          ; Check if number is negative 
+        ;ADD     R5, R5, #0          ; Check if number is negative 
         BRn     RN_INVALID          ; If N is set, number is < 0 (invalid) 
 
         LD      R3, CONST_NEG_101   ; Load -101 into R3 
