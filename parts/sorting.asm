@@ -1,64 +1,78 @@
-; Bubble Sort: prompts user to input 8 digit number, then our program will sort it.
+;------------------------------------------------------------------
+; BUBBLESORT Subroutine
+;------------------------------------------------------------------
+BUBBLESORT
+        ; save R1–R7 that we’ll clobber
+        ADD     R6, R6, #-1   ; push R7
+        STR     R7, R6, #0
+        ADD     R6, R6, #-1   ; push R5
+        STR     R5, R6, #0
+        ADD     R6, R6, #-1   ; push R4
+        STR     R4, R6, #0
+        ADD     R6, R6, #-1   ; push R3
+        STR     R3, R6, #0
+        ADD     R6, R6, #-1   ; push R2
+        STR     R2, R6, #0
+        ADD     R6, R6, #-1   ; push R1
+        STR     R1, R6, #0
 
-; R0: Used for input/output
-; R1: Outer loop counter
-; R2: Inner loop counter
-; R3: Current array element
-; R4: Next array element
-; R5: Array length (8)
-; R6: Used for comparisons
-; R7: Return address
+B_OUTER
+        AND     R1, R1, #0    ; SWAPPED = 0
+        LEA     R2, ARRAY     ; R2 → ARRAY base
+        AND     R3, R3, #0
+        ADD     R3, R3, #7    ; inner loop count = 7
 
-.ORIG x3000
+B_INNER
+        LDR     R4, R2, #0    ; x1 = M[R2]
+        LDR     R5, R2, #1    ; x2 = M[R2+1]
+        NOT     R7, R4        ; R7 = –x1
+        ADD     R7, R7, #1
+        ADD     R6, R5, R7    ; R6 = x2 – x1
+        BRn     B_DO_SWAP     ; if x2 < x1, swap
 
-BUBBLE_SORT
-    ST R7, SAVE_R7                  ; Save return address
-    
-    ; Initialize outer loop counter
-    AND R1, R1, #0                  ; R1 = 0
-    ADD R1, R1, #-8                 ; R1 = -8
-    
-OUTER_LOOP
-    ADD R1, R1, #1                  ; R1++
-    BRzp DONE                       ; If R1 >= 0, all passes done
-    
-    ; Initialize inner loop counter
-    AND R2, R2, #0                  ; R2 = 0
-    ADD R2, R2, #-7                 ; R2 = -7
-    
-INNER_LOOP
-    ADD R2, R2, #1                  ; R2++
-    BRzp OUTER_LOOP                 ; If R2 >= 0, go to outer loop
-    
-    ; Calculate address of ARRAY[j]
-    LEA R6, ARRAY                   ; R6 = &ARRAY[0]
-    ADD R6, R6, R2                  ; R6 = &ARRAY[j]
+B_SKIP
+        ADD     R2, R2, #1
+        ADD     R3, R3, #-1
+        BRp     B_INNER
+        BRz     B_CHECK_DONE
+        BR      B_OUTER
 
-    ; Load A[j] and A[j+1]
-    LDR R3, R6, #0                  ; R3 = ARRAY[j]
-    LDR R4, R6, #1                  ; R4 = ARRAY[j+1]
+B_DO_SWAP
+        JSR     SWAP          ; swap M[R2] and M[R2+1]
+        ADD     R1, R1, #1    ; SWAPPED = 1
+        ADD     R2, R2, #1
+        ADD     R3, R3, #-1
+        BRp     B_INNER
 
-    ; Compare if R3 <= R4 skip NO_SWAP
-    NOT R7, R4                      ; R7 = ~R4
-    ADD R7, R7, #1                  ; R7 = -R4
-    ADD R7, R3, R7                  ; R7 = R3 - R4
-    BRzp NO_SWAP                    ; R3 <= R4, no swap
+B_CHECK_DONE
+        ; restore R1–R7
+        LDR     R1, R6, #0    ADD R6, R6, #1
+        LDR     R2, R6, #0    ADD R6, R6, #1
+        LDR     R3, R6, #0    ADD R6, R6, #1
+        LDR     R4, R6, #0    ADD R6, R6, #1
+        LDR     R5, R6, #0    ADD R6, R6, #1
+        LDR     R7, R6, #0    ADD R6, R6, #1
+        RET
 
-    ; Swap A[j] <-> A[j+1]
-    STR R4, R6, #0                  ; ARRAY[j] = old R4
-    STR R3, R6, #1                  ; ARRAY[j+1] = old R3
-    
+;------------------------------------------------------------------
+; SWAP Subroutine
+;------------------------------------------------------------------
+SWAP
+        ; save R1, R2, R7
+        ADD     R6, R6, #-1   ; push R1
+        STR     R1, R6, #0
+        ADD     R6, R6, #-1   ; push R2
+        STR     R2, R6, #0
+        ADD     R6, R6, #-1   ; push R7
+        STR     R7, R6, #0
 
-NO_SWAP
-    BR INNER_LOOP                   ; Continue inner loop
-    
-DONE
-    LD R7, SAVE_R7                  ; Restore return address
-    RET
+        LDR     R1, R2, #0    ; R1 = x1
+        LDR     R3, R2, #1    ; R3 = x2
+        STR     R3, R2, #0    ; M[R2]   ← x2
+        STR     R1, R2, #1    ; M[R2+1] ← x1
 
-; Data
-ARRAY   .BLKW 8                     ; Array of 8 words
-SAVE_R7 .BLKW 1                     ; Save return address
-
-
-.END
+        ; restore R1, R2, R7
+        LDR     R7, R6, #0    ADD R6, R6, #1
+        LDR     R2, R6, #0    ADD R6, R6, #1
+        LDR     R1, R6, #0    ADD R6, R6, #1
+        RET
