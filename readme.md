@@ -90,8 +90,8 @@ If you are using macOS or Chromebook, use one of the following online simulators
 
 ## Example
 
-- **Input**: 64 34 25 12 22 11 90 -5
-- **Output**: -5 11 12 22 25 34 64 90
+- **Input**: 64 34 25 12 22 11 90 5
+- **Output**: 5 11 12 22 25 34 64 90
 
 <img src="/output.png" alt="expected output">
 
