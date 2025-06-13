@@ -93,7 +93,7 @@ If you are using macOS or Chromebook, use one of the following online simulators
 - **Input**: 64 34 25 12 22 11 90 5
 - **Output**: 5 11 12 22 25 34 64 90
 
-<img src="/output.png" height="120" alt="expected output">
+<img src="/output.png" height="200" alt="expected output">
 
 ## Manufactured by CSS
 
